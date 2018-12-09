@@ -1,4 +1,4 @@
-package siney.cn.leftslideview;
+package siney.cn.opensource;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("siney.cn.leftslideview", appContext.getPackageName());
+        assertEquals("siney.cn.opensource", appContext.getPackageName());
     }
 }
