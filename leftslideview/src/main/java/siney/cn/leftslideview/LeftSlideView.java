@@ -67,7 +67,7 @@ public class LeftSlideView extends RecyclerView {
 //                ContactsListAdapter adapter = (ContactsListAdapter) getAdapter();
                 view = findChildViewUnder(x, y);
                 if(view != null){
-                    LinearLayout tmp_layout = null;
+                    LinearLayout tmp_layout = view.findViewById(R.id.contact_item);
                     last_x = x;
                     last_y = y;
                     maxWidth = tmp_layout.findViewById(R.id.top).getWidth() * HIDEN_NUM;
