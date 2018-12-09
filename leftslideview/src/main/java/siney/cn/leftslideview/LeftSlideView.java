@@ -37,6 +37,8 @@ public class LeftSlideView extends RecyclerView {
 
     private LeftSlideLinearManager manager;
 
+    private int id;
+
 //    private ContactsListAdapter.ViewHolder viewHolder;//当前点击处的ciewHolder
 
     public LeftSlideView(@NonNull Context context) {
@@ -54,6 +56,10 @@ public class LeftSlideView extends RecyclerView {
 
     }
 
+    public void setItemId(int id){
+        this.id = id;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent e) {
 //        return true;//消费完事件
@@ -67,7 +73,7 @@ public class LeftSlideView extends RecyclerView {
 //                ContactsListAdapter adapter = (ContactsListAdapter) getAdapter();
                 view = findChildViewUnder(x, y);
                 if(view != null){
-                    LinearLayout tmp_layout = view.findViewById(R.id.contact_item);
+                    LinearLayout tmp_layout = view.findViewById(id);
                     last_x = x;
                     last_y = y;
                     maxWidth = tmp_layout.findViewById(R.id.top).getWidth() * HIDEN_NUM;
