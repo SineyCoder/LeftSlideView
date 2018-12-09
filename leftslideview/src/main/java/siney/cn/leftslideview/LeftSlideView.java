@@ -15,7 +15,7 @@ public class LeftSlideView extends RecyclerView {
 
     private static final int NO_SLIDE = 0, OPENING = 1, EXPAND_SLIDE = 2, CLOSING = 3, SLIDING = 4, VERTICAL_SLIDE = 5;
 
-    private static final int HIDEN_NUM = 2;
+    private int HIDEN_NUM = 0;
 
     private volatile boolean loading;//判断是否在，
 
@@ -37,7 +37,9 @@ public class LeftSlideView extends RecyclerView {
 
     private LeftSlideLinearManager manager;
 
-    private int id;
+    private int layoutId;
+
+    private int[] itemsId;
 
 //    private ContactsListAdapter.ViewHolder viewHolder;//当前点击处的ciewHolder
 
@@ -56,8 +58,17 @@ public class LeftSlideView extends RecyclerView {
 
     }
 
-    public void setItemId(int id){
-        this.id = id;
+    public void setLayout(int layoutId){
+        this.layoutId = layoutId;
+    }
+
+    /**
+     * 传入参数从左到右依次为要显示的格子的id
+     * @param itemId view的id
+     */
+    public void setItems(int... itemId){
+        itemsId = itemId;
+        HIDEN_NUM = itemsId.length;
     }
 
     @Override
@@ -73,10 +84,13 @@ public class LeftSlideView extends RecyclerView {
 //                ContactsListAdapter adapter = (ContactsListAdapter) getAdapter();
                 view = findChildViewUnder(x, y);
                 if(view != null){
-                    LinearLayout tmp_layout = view.findViewById(id);
+                    LinearLayout tmp_layout = view.findViewById(layoutId);
                     last_x = x;
                     last_y = y;
-                    maxWidth = tmp_layout.findViewById(R.id.top).getWidth() * HIDEN_NUM;
+                    maxWidth = 0;
+                    for (int anItemsId : itemsId) {
+                        maxWidth += tmp_layout.findViewById(anItemsId).getWidth();
+                    }
                     if(layout == null || layout.getScrollX() == 0){//如果布局为空，或者已经处于原位，那么指向新layout，并且重置所有属性
                         layout = tmp_layout;
                         loading = false;
@@ -124,7 +138,7 @@ public class LeftSlideView extends RecyclerView {
             case MotionEvent.ACTION_UP:
                 if(state == SLIDING){
                     Log.d("TAG", "没进去吗");
-                    int thresholdWidth = maxWidth / HIDEN_NUM;
+                    int thresholdWidth = maxWidth / (HIDEN_NUM + 1);
                     loading = true;
                     if(cur_axis_x > thresholdWidth){
                         state = OPENING;
