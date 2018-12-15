@@ -1,1 +1,1 @@
-include ':app', ':leftslideview'
+include ':app', ':leftslideview', ':slidepickerview'
